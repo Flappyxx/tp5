@@ -1,6 +1,5 @@
 import Fastify from "fastify"
-import {connectDB} from "../databases/config.js"
-import * as fs from "fs"
+import {readFileSync} from "fs"
 import * as path from "path"
 import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url);
@@ -13,17 +12,18 @@ const fastify = Fastify({
     logger: true,
     http2: true,
     https: {
-        key: fs.readFileSync(path.join(__dirname, '..', '.key', 'private.key')),
-        cert: fs.readFileSync(path.join(__dirname, '..', '.key', 'server.crt'))
+        allowHTTP1:true,
+        key: readFileSync(path.join(__dirname,'..', '.key', 'private.key')),
+        cert: readFileSync(path.join(__dirname,'..', '.key', 'server.crt'))
     }
 })
+
+fastify.register(import("./routes/routes.js"))
 
 fastify.listen({port}, function (err, address) {
     if (err) {
         fastify.log.error(err);
         process.exit(1);
     }
-
-    connectDB()
     fastify.log.info(`Fastify is listening on port: ${address}`);
 });

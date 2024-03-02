@@ -4,7 +4,8 @@ const { Schema } = mongoose;
 const bookSchema = new Schema({
     title: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     author: {
         type: String,
@@ -17,3 +18,5 @@ const bookSchema = new Schema({
         default: 'poche'
     }
 });
+
+export const Book = mongoose.model('Book', bookSchema);

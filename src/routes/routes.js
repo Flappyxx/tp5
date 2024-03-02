@@ -28,7 +28,7 @@ export default async (app,opts) => {
 }
 
 //ranger ça dans un nouverau fichier schema.js (pas celui de mongodb)
-const bookSchema = {
+const bookSchema = {body : {
     type: "object",
     properties: {
         title: {type: "string"},
@@ -41,6 +41,7 @@ const bookSchema = {
     },
     required: ["title", "author"],
 }
+}
 
 const getBookSchema = {
     response: {
@@ -51,7 +52,7 @@ const getBookSchema = {
     }
 }
 
-const updateBookSchema = {
+const updateBookSchema = {body :{
     type: "object",
     properties: {
         title: {type: "string"},
@@ -63,12 +64,12 @@ const updateBookSchema = {
         },
     },
     required: ["title"],
-}
+}}
 
-const deleteBookSchema = {
+const deleteBookSchema ={body : {
     type: "object",
     properties: {
         title: {type: "string"}
     },
     required: ["title"],
-}
+}}
